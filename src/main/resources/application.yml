@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: formalizape
+
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev} # Por defecto dev
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate.format_sql: false
+
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+jwt:
+  secret: ${JWT_SECRET:super_clave_ultra_segura_para_firmar_los_tokens_1234567890}
+  expiration: ${JWT_EXPIRATION:86400000}  # 1 día por defecto
