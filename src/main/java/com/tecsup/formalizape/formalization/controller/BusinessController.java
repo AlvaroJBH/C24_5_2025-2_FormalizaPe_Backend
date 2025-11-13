@@ -57,7 +57,7 @@ public class BusinessController {
             @RequestBody BusinessDTO.RequestDTO request
     ) {
         Business business = businessMapper.toEntity(request);
-        User owner = userRepository.findByUsername(userDetails.getUsername())
+        User owner = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("Owner not found"));
         business.setOwner(owner);
         Business created = businessService.create(business);

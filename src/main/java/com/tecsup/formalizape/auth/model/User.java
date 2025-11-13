@@ -11,8 +11,24 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends BaseEntity {
 
+    // Nombre de la empresa que se usará como username
+    @Column(nullable = false, unique = true)
     private String username;
+
+    // Correo electrónico obligatorio y único
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    // Contraseña
+    @Column(nullable = false)
     private String password;
+
+    // DNI opcional
+    private String dni;
+
+    // RUC opcional
+    private String ruc;
+
     @Builder.Default
     private boolean enabled = true;
 

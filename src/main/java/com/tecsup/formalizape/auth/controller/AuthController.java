@@ -18,13 +18,22 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, String>> register(@RequestBody Map<String, String> request) {
-        String token = authService.register(request.get("username"), request.get("password"));
+        String token = authService.register(
+                request.get("username"),   // nombre de empresa
+                request.get("email"),
+                request.get("password"),
+                request.get("dni"),
+                request.get("ruc")
+        );
         return ResponseEntity.ok(Map.of("token", token));
     }
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> request) {
-        String token = authService.login(request.get("username"), request.get("password"));
+        String token = authService.login(
+                request.get("email"),
+                request.get("password")
+        );
         return ResponseEntity.ok(Map.of("token", token));
     }
 
