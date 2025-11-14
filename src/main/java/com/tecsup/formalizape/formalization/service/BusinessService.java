@@ -34,6 +34,8 @@ public class BusinessService {
         Business existing = getById(id);
         existing.setName(business.getName());
         existing.setDescription(business.getDescription());
+        existing.setStatus(business.getStatus());
+        existing.setSector(business.getSector());
         return businessRepository.save(existing);
     }
 

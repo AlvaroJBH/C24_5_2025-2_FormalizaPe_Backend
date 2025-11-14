@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProcedureRepository extends JpaRepository<Procedure, Long> {
+    boolean existsByName(String name);
 }
