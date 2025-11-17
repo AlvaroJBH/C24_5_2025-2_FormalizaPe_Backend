@@ -32,8 +32,7 @@ public class ChatbotController {
     @PostMapping("/conversations/{conversationId}/messages")
     public MessageResponseDTO sendMessage(@PathVariable Long conversationId,
                                           @RequestBody SendMessageRequestDTO request) {
-        Message assistantMessage = chatbotService.sendUserMessage(conversationId, request.getContent());
-        return messageMapper.toResponseDTO(assistantMessage);
+        return chatbotService.sendUserMessage(conversationId, request.getContent());
     }
 
     // 3️⃣ Obtener historial de mensajes
@@ -50,5 +49,14 @@ public class ChatbotController {
     public ConversationWithMessagesDTO getConversation(@PathVariable Long conversationId) {
         Conversation conversation = chatbotService.getConversation(conversationId);
         return conversationMapper.toWithMessagesDTO(conversation);
+    }
+
+    // 5️⃣ Listar conversaciones de un Business
+    @GetMapping("/business/{businessId}/conversations")
+    public List<ConversationResponseDTO> getConversationsByBusiness(@PathVariable Long businessId) {
+        List<Conversation> conversations = chatbotService.getConversationsByBusiness(businessId);
+        return conversations.stream()
+                .map(conversationMapper::toResponseDTO)
+                .collect(Collectors.toList());
     }
 }

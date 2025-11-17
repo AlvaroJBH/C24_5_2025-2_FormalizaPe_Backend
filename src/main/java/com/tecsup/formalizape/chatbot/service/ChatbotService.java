@@ -1,5 +1,6 @@
 package com.tecsup.formalizape.chatbot.service;
 
+import com.tecsup.formalizape.chatbot.dto.MessageResponseDTO;
 import com.tecsup.formalizape.chatbot.model.Conversation;
 import com.tecsup.formalizape.chatbot.model.ConversationSummary;
 import com.tecsup.formalizape.chatbot.model.Message;
@@ -29,7 +30,7 @@ public class ChatbotService {
     private static final int SUMMARY_THRESHOLD = 20;    // generar resumen cada N mensajes
 
     @Transactional
-    public Message sendUserMessage(Long conversationId, String userContent) {
+    public MessageResponseDTO sendUserMessage(Long conversationId, String userContent) {
         Conversation conversation = conversationRepo.findById(conversationId)
                 .orElseThrow(() -> new RuntimeException("Conversation not found"));
 
@@ -62,10 +63,20 @@ public class ChatbotService {
                 .build();
         messageRepo.save(assistantMessage);
 
-        // 6️⃣ Generar resumen si corresponde
+        // 6️⃣ Generar sugerencias
+        List<String> suggestions = openAIService.generateSuggestions(assistantResponse);
+
+        // 7️⃣ Generar resumen si corresponde
         maybeUpdateSummary(conversation);
 
-        return assistantMessage;
+        // 8️⃣ Mapear al DTO y agregar sugerencias
+        MessageResponseDTO dto = new MessageResponseDTO();
+        dto.setRole(assistantMessage.getRole());
+        dto.setContent(assistantMessage.getContent());
+        dto.setCreatedAt(assistantMessage.getCreatedAt());
+        dto.setSuggestions(suggestions);
+
+        return dto;
     }
 
     /**
@@ -119,4 +130,10 @@ public class ChatbotService {
         return conversationRepo.findById(conversationId)
                 .orElseThrow(() -> new RuntimeException("Conversation not found"));
     }
+
+    @Transactional(readOnly = true)
+    public List<Conversation> getConversationsByBusiness(Long businessId) {
+        return conversationRepo.findByBusinessIdOrderByCreatedAtDesc(businessId);
+    }
+
 }

@@ -36,15 +36,21 @@ public class OpenAIService {
     public List<ChatMessage> buildPayload(ConversationSummary summary, List<Message> recentMessages) {
         List<ChatMessage> messages = new ArrayList<>();
 
-        // Mensaje system inicial
-        messages.add(new ChatMessage("system", "Eres un asistente útil."));
+        // 🔹 Mensaje system: define personalidad, tono, estilo y reglas estrictas
+        messages.add(new ChatMessage("system",
+                "Eres FormalizaBot, asistente virtual experto en trámites, regímenes tributarios y constitución de empresas en Perú. "
+                        + "Responde de manera clara, concisa y amigable. "
+                        + "No uses tablas, listas largas ni formatos complejos (solo texto simple). "
+                        + "Máximo 5 frases por respuesta. "
+                        + "Si no sabes algo, dilo cordialmente y sugiere posibles opciones de consulta. "
+                        + "Evita ejemplos extensos, mantén la respuesta breve y enfocada al usuario."));
 
-        // Agregar resumen si existe
+        // 🔹 Agregar resumen si existe
         if (summary != null) {
-            messages.add(new ChatMessage("system", "Resumen de conversación: " + summary.getSummaryText()));
+            messages.add(new ChatMessage("system", "Resumen de la conversación previa: " + summary.getSummaryText()));
         }
 
-        // Agregar mensajes recientes en orden ascendente
+        // 🔹 Agregar mensajes recientes del usuario y asistente
         recentMessages.stream()
                 .sorted((m1, m2) -> m1.getCreatedAt().compareTo(m2.getCreatedAt()))
                 .forEach(m -> messages.add(new ChatMessage(m.getRole(), m.getContent())));
@@ -84,4 +90,34 @@ public class OpenAIService {
 
         return sendChat(payload);
     }
+
+    /**
+     * Genera hasta 3 sugerencias de mensajes que el usuario podría enviar a continuación.
+     * Basado en la última respuesta del asistente.
+     */
+    public List<String> generateSuggestions(String assistantReply) {
+        String prompt = "Dado el siguiente mensaje del asistente, genera hasta 3 posibles preguntas o mensajes cortos que un usuario podría enviar a continuación. " +
+                "Devuelve solo la lista de frases, separadas por comas o saltos de línea, sin explicaciones:\n\n" + assistantReply;
+
+        ChatMessage systemMessage = new ChatMessage("system",
+                "Eres FormalizaBot, un asistente útil que sugiere mensajes posibles para el usuario de forma clara y breve.");
+        ChatMessage userMessage = new ChatMessage("user", prompt);
+
+        List<ChatMessage> payload = List.of(systemMessage, userMessage);
+
+        String response = sendChat(payload);
+
+        // Separar por comas o saltos de línea y limitar a 3 sugerencias
+        String[] parts = response.split("\\r?\\n|,");
+        List<String> suggestions = new ArrayList<>();
+        for (String s : parts) {
+            s = s.trim();
+            if (!s.isEmpty() && suggestions.size() < 3) {
+                suggestions.add(s);
+            }
+        }
+
+        return suggestions;
+    }
+
 }
