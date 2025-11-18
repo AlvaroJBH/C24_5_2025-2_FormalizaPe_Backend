@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface BusinessProcedureRepository extends JpaRepository<BusinessProcedure, Long> {
@@ -12,4 +13,6 @@ public interface BusinessProcedureRepository extends JpaRepository<BusinessProce
     List<BusinessProcedure> findByBusinessId(Long businessId);
 
     List<BusinessProcedure> findByProcedureId(Long procedureId);
+
+    Optional<BusinessProcedure> findByBusinessIdAndProcedureId(Long businessId, Long procedureId);
 }
