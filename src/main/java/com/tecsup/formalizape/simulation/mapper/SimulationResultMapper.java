@@ -11,9 +11,15 @@ public interface SimulationResultMapper {
     @Mapping(source = "id", target = "resultId")
     @Mapping(source = "taxRegime.code", target = "regimeCode")
     @Mapping(source = "taxRegime.name", target = "regimeName")
-    @Mapping(target = "monthlyTax", expression = "java(result.getMonthlyTax().toPlainString())")
-    @Mapping(target = "monthlyIgv", expression = "java(result.getMonthlyIgv().toPlainString())")
-    @Mapping(target = "totalMonthly", expression = "java(result.getTotalMonthly().toPlainString())")
-    @Mapping(target = "totalAnnual", expression = "java(result.getTotalAnnual().toPlainString())")
+    @Mapping(target = "monthlyTax",
+            expression = "java(result.getMonthlyTax() != null ? result.getMonthlyTax().toPlainString() : null)")
+    @Mapping(target = "monthlyIgv",
+            expression = "java(result.getMonthlyIgv() != null ? result.getMonthlyIgv().toPlainString() : null)")
+    @Mapping(target = "totalMonthly",
+            expression = "java(result.getTotalMonthly() != null ? result.getTotalMonthly().toPlainString() : null)")
+    @Mapping(target = "totalAnnual",
+            expression = "java(result.getTotalAnnual() != null ? result.getTotalAnnual().toPlainString() : null)")
+    @Mapping(source = "recommended", target = "recommended")
+    @Mapping(source = "available", target = "available") // nuevo campo
     SimulationResultResponse.SimulationResultItem toItem(SimulationResult result);
 }

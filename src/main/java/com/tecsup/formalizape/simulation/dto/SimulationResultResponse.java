@@ -25,5 +25,6 @@ public class SimulationResultResponse {
         private String totalAnnual;
 
         private Boolean recommended;
+        private Boolean available;
     }
 }
