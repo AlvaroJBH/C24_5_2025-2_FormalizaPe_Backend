@@ -7,10 +7,16 @@ import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatCompletionChoice;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import lombok.RequiredArgsConstructor;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -129,6 +135,95 @@ public class OpenAIService {
         }
 
         return suggestions;
+    }
+
+    private List<String> listDocuments() {
+        try {
+            ClassLoader classLoader = getClass().getClassLoader();
+            URL resource = classLoader.getResource("documents");
+
+            if (resource == null) return List.of();
+
+            File folder = new File(resource.toURI());
+            File[] files = folder.listFiles();
+
+            if (files == null) return List.of();
+
+            return Arrays.stream(files)
+                    .map(File::getName)
+                    .toList();
+
+        } catch (Exception e) {
+            return List.of();
+        }
+    }
+
+    public String pickBestDocument(String userMessage) {
+
+        List<String> docs = listDocuments();
+
+        String prompt = "Tengo estos documentos disponibles:\n" +
+                String.join("\n", docs) +
+                "\n\nCon este mensaje del usuario: \"" + userMessage + "\"" +
+                "\n\nDevuelve ÚNICAMENTE el nombre del archivo que mejor sirve para responder. " +
+                "Sin explicación adicional.";
+
+        ChatCompletionRequest req = ChatCompletionRequest.builder()
+                .model("gpt-4.1-mini")
+                .messages(List.of(
+                        new ChatMessage("system", "Eres un clasificador experto."),
+                        new ChatMessage("user", prompt)
+                ))
+                .build();
+
+        ChatCompletionChoice choice = getClient()
+                .createChatCompletion(req)
+                .getChoices()
+                .get(0);
+
+        return choice.getMessage().getContent().trim();
+    }
+
+    private String loadDocumentContent(String filename) {
+        try {
+            ClassPathResource resource = new ClassPathResource("documents/" + filename);
+            if (filename.toLowerCase().endsWith(".pdf")) {
+                PDDocument pdf = PDDocument.load(resource.getInputStream());
+                PDFTextStripper stripper = new PDFTextStripper();
+                return stripper.getText(pdf);
+            }
+
+            // TXT u otros
+            return new String(resource.getInputStream().readAllBytes());
+        } catch (Exception e) {
+            return "Error: no se pudo cargar el documento " + filename;
+        }
+    }
+
+    public String answerUsingDocuments(ConversationSummary summary,
+                                       List<Message> recentMessages,
+                                       String userMessage) {
+
+        // 1️⃣ Elegir documento
+        String docName = pickBestDocument(userMessage);
+
+        System.out.println("📄 Documento seleccionado: " + docName);
+
+        // 2️⃣ Cargar documento
+        String docContent = loadDocumentContent(docName);
+
+        // 3️⃣ Construir payload original + documento
+        List<ChatMessage> basePayload = buildPayload(summary, recentMessages);
+
+        basePayload.add(new ChatMessage(
+                "system",
+                "Para esta respuesta debes usar EXCLUSIVAMENTE este documento:\n\n" + docContent
+        ));
+
+        basePayload.add(new ChatMessage("user", userMessage));
+
+        // 4️⃣ Llamar modelo final
+        return sendChat(basePayload);
     }
 
 }

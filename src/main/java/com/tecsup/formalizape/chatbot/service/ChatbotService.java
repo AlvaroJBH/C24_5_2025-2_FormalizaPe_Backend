@@ -49,11 +49,12 @@ public class ChatbotService {
         // 3️⃣ Traer último resumen si existe
         ConversationSummary lastSummary = summaryRepo.findTopByConversationOrderByCreatedAtDesc(conversation).orElse(null);
 
-        // 4️⃣ Construir payload y llamar a OpenAI
-        List<com.theokanning.openai.completion.chat.ChatMessage> payload =
-                openAIService.buildPayload(lastSummary, recentMessages);
-
-        String assistantResponse = openAIService.sendChat(payload);
+        // 4️⃣ Construir payload y llamar a OpenAI (USANDO DOCUMENTOS)
+        String assistantResponse = openAIService.answerUsingDocuments(
+                lastSummary,
+                recentMessages,
+                userContent
+        );
 
         // 5️⃣ Guardar respuesta del asistente
         Message assistantMessage = Message.builder()

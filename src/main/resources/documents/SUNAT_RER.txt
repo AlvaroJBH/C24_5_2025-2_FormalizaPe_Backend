@@ -1,0 +1,161 @@
+Régimen Especial de Renta (RER)
+Descripción
+Actividades no comprendidas en el RER
+Cambiar al RER
+Comprobantes que debo emitir en el RER
+Acceder al Régimen Especial del Impuesto a la Renta (RER)
+Descripción
+En este régimen tributario se encuentran las personas con negocio y personas jurídicas que obtengan rentas provenientes de actividades de comercio o industria, y actividades de servicios.
+
+Este régimen solo lleva 2 registros contables (compras y ventas), emiten todo tipo de comprobantes de pago, solo presentan declaraciones mensuales y no están obligados a presentar declaraciones anuales.
+
+Además, deben considerar que existen restricciones en este régimen:
+
+Sus ingresos o compras anuales no deben superar los S/ 525,000.00.
+Tener como máximo 10 trabajadores por turno de trabajo.
+El valor de los activos fijos no debe superar los S/ 126,000.00 (excepto vehículos y predios).
+Tampoco pueden realizar actividades no comprendidas en el RER.
+Al realizar las declaraciones mensuales, se determinará el pago de 2 impuestos:
+
+El Impuesto General a la Venta (IGV) del 18%.
+El impuesto a la renta (el 1.5% sobre sus ingresos netos).
+Un requisito para pertenecer de manera permanente a este régimen es cumplir con la declaración y pago del periodo de inicio de actividades dentro de la fecha de vencimiento, según el cronograma de obligaciones mensuales y así evitar sanciones.
+
+Si tu negocio crece y necesitas cambiar de Régimen Tributario por uno que se adecue mejor a tu negocio, puedes hacerlo en cualquier momento siguiendo las indicaciones correspondientes a tu régimen actual. También puedes conocer otros régimenes tributarios para negocio.
+
+Último cambio  25 mayo 2022
+
+El Régimen Especial del Impuesto a la Renta (RER) es un régimen tributario dirigido a las personas naturales, sociedades conyugales, sucesiones indivisas y personas jurídicas, domiciliadas en el país, que obtengan rentas de tercera categoría provenientes de las siguientes actividades:
+
+a. Actividades de comercio y/o industria, entendiéndose por tales a la venta de los bienes que adquieran, produzcan o manufacturen, así como la de aquellos recursos naturales que extraigan, incluidos la cría y el cultivo.
+
+b. Actividades de servicios, entendiéndose por tales a cualquier otra actividad no señalada expresamente en el inciso anterior.
+
+Las actividades antes señaladas podrán ser realizadas en forma conjunta.
+
+rer
+
+ 
+
+Comprobantes de Pago Electrónicos.
+
+Los contribuyentes acogidos a este régimen deben emitir comprobantes de pago electrónicos como boletas de venta, facturas, entre otros.
+
+IMPORTANTE:	No es obligatorio emitir boletas de venta o tickets por ventas menores a S/ 5, salvo que el comprador lo exija. En estos casos, al final del día, debe emitir una boleta de venta que comprenda el total de sus ventas menores a S/ 5, por las que no se hubiera emitido boleta, conservando el original y la copia para el control de la SUNAT.
+Para mayor información sobre estos, ingresar aquí
+
+Libros y Registros Contables
+
+Registro de Ventas
+Registro de Compras
+La forma de llevado se debe hacer conforme a las normas vigentes sobre la materia, para mayor información, ingresar aquí.
+
+Tasa del RER:
+
+1.5% de sus ingresos netos mensuales provenientes de sus rentas de tercera categoría.
+18% (16% de IGV y 2% del Impuesto de Promoción Municipal)
+Declaración y Pago:
+
+Las declaraciones mensuales se realizan por el portal de SUNAT mediante el Formulario Virtual 621, el cronograma de obligaciones mensuales lo puede encontrar aquí.
+
+Asimismo, los contribuyentes del RER no están obligados a realizar la Declaración Jurada Anual del Impuesto a la Renta.
+
+Los pagos se pueden realizar de manera virtual o presencial:
+
+Virtualmente:
+Portal Sunat (con Clave SOL): ingresando a www.sunat.gob.pe/ Sunat Operaciones en Línea (Sol)/ Nueva Plataforma/ Presentación y pago/ Boletas de Pago/ Pago de Tributos.Podrá utilizar las siguientes modalidades:
+Cargo en Cuenta Bancaria (previa afiliación en la entidad financiera),
+Cuenta de Detracciones,
+Número de Pago SUNAT (NPS),
+Tarjeta de Débito, Crédito o YAPE.
+Mediante el APP de su Banco: en el APP de su banco ingresar a la opción Pago de Servicios/ Sunat NPS/ Ingresar Numero de NPS (generado previamente en la Página de SUNAT o por las App Personas y Emprender)
+Mediante la App Personas y App Emprender: podrás realizar el pago de tributos, ingresando a la opción Declaraciones y Pagos/ Boletas de pago.
+Pagos Sin Clave SOL: desde www.sunat.gob.pe en la opción Operaciones en línea (SOL), sección Pagos sin Clave SOL.
+Presencialmente:
+En los bancos y agentes autorizados.
+Acogimiento al RER
+
+Cuando inician actividades en el transcurso del ejercicio: 
+
+Con la declaración y el pago de la cuota, que corresponda al periodo de inicio de actividades declarado en el RUC, y siempre que se efectúen dentro de la fecha de vencimiento.
+
+Cuando provienen del:
+
+b.1. Régimen MYPE Tributario o Régimen General: el acogimiento se realizará únicamente con ocasión de la declaración y pago del periodo enero de cada año, siempre que se efectúen dentro de la fecha de vencimiento.
+
+b.2. Nuevo Régimen Único Simplificado – NRUS: Puede acogerse en cualquier periodo del ejercicio con la declaración y pago dentro de la fecha de vencimiento.
+
+rer
+
+ 
+
+Caracteristicas
+
+Conceptos	Descripción
+Sujetos comprendidos
+ 
+
+Personas naturales, jurídicas, sucesiones indivisas, sociedad conyugal
+Actividades comprendidas	Empresariales (verificar restricciones)
+Límite de Ingresos	S/ 525,000 anuales
+Límite de compras	S/ 525,000 anuales.
+Activos fijos	S/ 126,000 (no cuentan predios y vehículos)
+Cantidad de Trabajadores	Hasta 10 por turno de trabajo.
+Libros y Registros	Registro de Compras y Registro de Ventas
+Comprobantes que emiten	Factura, boleta de venta y los demás permitidos.
+Tributos mensuales	
+Renta : 1.5% de los ingresos netos mensuales
+IGV : 18% (incluye Impuesto de Promoción Municipal)
+Aportaciones al Essalud (por sus trabajadores)
+Sujetos y actividades que no pueden estar en el RER
+
+No están comprendidas en el presente Régimen las personas naturales, sociedades conyugales, sucesiones indivisas y personas jurídicas, domiciliadas en el país, que:
+
+Incurra en cualquiera de los siguientes supuestos:
+
+Tampoco podrán acogerse al presente Régimen los sujetos que:
+
+Cuando en el transcurso de cada ejercicio gravable ingresos netos superen los S/. 525,000.00 (Quinientos Veinticinco Mil y 00/100 Nuevos Soles).
+
+Realicen actividades que sean calificadas como contratos de construcción según las normas del Impuesto General a las Ventas, aun cuando no se encuentren gravadas con el referido Impuesto.
+
+El valor de los activos fijos afectados a la actividad, con excepción de los predios y vehículos, supere los S/. 126,000.00 (Ciento Veintiséis Mil y 00/100 Nuevos Soles).
+
+Presten el servicio de transporte de carga de mercancías siempre que sus vehículos tengan una capacidad de carga mayor o igual a 2 TM (dos toneladas métricas), y/o el servicio de transporte terrestre nacional o internacional de pasajeros.
+
+Cuando en el transcurso de cada ejercicio gravable el monto de sus adquisiciones afectadas a la actividad acumuladas supere los S/. 525,000.00 (Quinientos Veinticinco Mil y 00/100 Nuevos Soles). Las adquisiciones a las que se hace referencia no incluyen las de los activos fijos.
+
+Sean notarios, martilleros, comisionistas y/o rematadores; agentes corredores de productos, de bolsa de valores y/u operadores especiales que realizan actividades en la Bolsa de Productos; agentes de aduana; los intermediarios y/o auxiliares de seguros.
+
+Desarrollen actividades generadoras de rentas de tercera categoría con personal afectado a la actividad mayor a 10 (diez) personas por turno de trabajo.
+
+Desarrollen actividades de comercialización de combustibles líquidos y otros productos derivados de los hidrocarburos, de acuerdo con el Reglamento para la Comercialización de Combustibles Líquidos y otros productos derivados de los Hidrocarburos
+ 	
+Organicen cualquier tipo de espectáculo público.
+
+ 	
+Sean titulares de negocios de casinos, tragamonedas y/u otros de naturaleza similar.
+
+ 	
+Sean titulares de agencias de viaje, propaganda y/o publicidad.
+
+ 	
+Realicen venta de inmuebles.
+
+ 	Presten servicios de depósitos aduaneros y terminales de almacenamiento.
+ 	
+Realicen las siguientes actividades, según la Clasificación Industrial Internacional Uniforme - CIIU Revisión 4 aplicable en el Perú según las normas correspondientes:
+Actividades de médicos y odontólogos.
+Actividades veterinarias.
+Actividades jurídicas.
+Actividades de contabilidad, teneduría de libros y auditoría, consultoría fiscal.
+Actividades de arquitectura e ingeniería y actividades conexas de consultoría técnica.
+Programación informática, consultoría de informática y actividades conexas; actividades de servicios de información; edición de programas de informática y de software en línea y reparación de ordenadores y equipo periféricos.
+Actividades de asesoramiento empresarial y en materia de gestión.
+Obtengan rentas de fuente extranjera.
+ 
+
+ 
+
+Base Legal:
+Decreto Supremo N° 179-2004: Del artículo 117 al 124 de la Ley del Impuestoa  la Renta.
