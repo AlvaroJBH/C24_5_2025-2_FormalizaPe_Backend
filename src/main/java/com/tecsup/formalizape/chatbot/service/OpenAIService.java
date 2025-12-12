@@ -11,10 +11,14 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -139,64 +143,27 @@ public class OpenAIService {
 
     private List<String> listDocuments() {
         try {
-            System.out.println("📂 [listDocuments] Iniciando búsqueda de documentos...");
+            System.out.println("📂 [listDocuments] Buscando documentos con ResourcePatternResolver...");
 
-            List<String> result = new ArrayList<>();
+            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
-            // Localizar la carpeta "documents" dentro del classpath
-            URL url = getClass().getClassLoader().getResource("documents");
-            System.out.println("📍 [listDocuments] URL encontrada: " + url);
+            // Busca archivos dentro de /documents/ sin importar si está en JAR o en carpeta local
+            Resource[] resources = resolver.getResources("classpath:/documents/*");
 
-            if (url == null) {
-                System.out.println("⚠️ [listDocuments] No se encontró la carpeta 'documents' en el classpath.");
-                return List.of();
-            }
+            List<String> names = new ArrayList<>();
 
-            if (url.getProtocol().equals("jar")) {
-
-                System.out.println("📦 [listDocuments] Ejecutando dentro de un JAR.");
-
-                // Extraer ruta del JAR
-                String jarPath = url.getPath().substring(5, url.getPath().indexOf("!"));
-                System.out.println("📦 [listDocuments] JAR detectado en: " + jarPath);
-
-                try (java.nio.file.FileSystem fs = java.nio.file.FileSystems.newFileSystem(
-                        java.nio.file.Paths.get(jarPath), (ClassLoader) null)) {
-
-                    java.nio.file.Path pathInJar = fs.getPath("documents");
-                    System.out.println("📦 [listDocuments] Ruta interna en JAR: " + pathInJar);
-
-                    java.nio.file.Files.walk(pathInJar)
-                            .filter(java.nio.file.Files::isRegularFile)
-                            .forEach(p -> {
-                                System.out.println("📄 [listDocuments] Archivo encontrado en JAR: " + p.getFileName());
-                                result.add(p.getFileName().toString());
-                            });
-                }
-
-            } else {
-
-                System.out.println("💻 [listDocuments] Ejecutando en entorno local (no JAR). Ruta: " + url);
-
-                // Cuando corre localmente (carpeta real)
-                File folder = new File(url.toURI());
-                File[] files = folder.listFiles();
-
-                if (files != null) {
-                    for (File f : files) {
-                        if (f.isFile()) {
-                            System.out.println("📄 [listDocuments] Archivo encontrado: " + f.getName());
-                            result.add(f.getName());
-                        }
-                    }
+            for (Resource res : resources) {
+                if (res.exists()) {
+                    System.out.println("📄 [listDocuments] Archivo encontrado: " + res.getFilename());
+                    names.add(res.getFilename());
                 }
             }
 
-            System.out.println("✅ [listDocuments] Archivos detectados: " + result);
-            return result;
+            System.out.println("✅ [listDocuments] Archivos detectados: " + names);
+            return names;
 
         } catch (Exception e) {
-            System.out.println("❌ [listDocuments] ERROR al listar documentos:");
+            System.out.println("❌ [listDocuments] ERROR:");
             e.printStackTrace();
             return List.of();
         }
@@ -242,45 +209,43 @@ public class OpenAIService {
         try {
             System.out.println("📥 [loadDocumentContent] Solicitado cargar archivo: " + filename);
 
-            ClassPathResource resource = new ClassPathResource("documents/" + filename);
+            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
-            System.out.println("📍 [loadDocumentContent] Ruta interna: documents/" + filename);
-            System.out.println("📦 [loadDocumentContent] Existe en classpath? " + resource.exists());
+            Resource[] matches = resolver.getResources("classpath:/documents/" + filename);
 
-            if (!resource.exists()) {
-                System.out.println("❌ [loadDocumentContent] ERROR: archivo NO encontrado en el classpath.");
+            if (matches.length == 0 || !matches[0].exists()) {
+                System.out.println("❌ [loadDocumentContent] Archivo NO encontrado en classpath.");
                 return "Error: el archivo no existe dentro del classpath → " + filename;
             }
 
-            // ❗ PDF
+            Resource resource = matches[0];
+
+            // PDF
             if (filename.toLowerCase().endsWith(".pdf")) {
-                System.out.println("📄 [loadDocumentContent] Detectado PDF. Cargando con PDFBox...");
+                System.out.println("📄 [loadDocumentContent] Cargando PDF...");
 
                 try (PDDocument pdf = PDDocument.load(resource.getInputStream())) {
                     PDFTextStripper stripper = new PDFTextStripper();
-
                     String text = stripper.getText(pdf);
-                    System.out.println("✅ [loadDocumentContent] PDF leído correctamente (" + text.length() + " caracteres).");
-
+                    System.out.println("✅ [loadDocumentContent] PDF leído: " + text.length() + " caracteres.");
                     return text;
                 }
             }
 
-            // ❗ TXT u otros formatos
-            System.out.println("📄 [loadDocumentContent] Archivo no PDF. Leyendo como texto plano...");
-            String text = new String(resource.getInputStream().readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
+            // Otros archivos
+            System.out.println("📄 [loadDocumentContent] Cargando archivo de texto...");
 
-            System.out.println("✅ [loadDocumentContent] Texto leído (" + text.length() + " caracteres).");
+            String text = new String(resource.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
 
+            System.out.println("✅ [loadDocumentContent] Archivo leído: " + text.length() + " caracteres.");
             return text;
 
         } catch (Exception e) {
-            System.out.println("❌ [loadDocumentContent] ERROR al cargar el archivo:");
+            System.out.println("❌ [loadDocumentContent] ERROR:");
             e.printStackTrace();
             return "Error: no se pudo cargar el documento → " + filename;
         }
     }
-
 
     public String answerUsingDocuments(ConversationSummary summary,
                                        List<Message> recentMessages,
