@@ -25,8 +25,12 @@ public class BusinessController {
 
     // GET all businesses
     @GetMapping
-    public ResponseEntity<List<BusinessDTO.ResponseDTO>> getAll() {
-        List<Business> businesses = businessService.getAll();
+    public ResponseEntity<List<BusinessDTO.ResponseDTO>> getMyBusinesses(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        List<Business> businesses = businessService.getByUserId(user.getId());
         List<BusinessDTO.ResponseDTO> response = businesses.stream()
                 .map(businessMapper::toResponse)
                 .toList();
