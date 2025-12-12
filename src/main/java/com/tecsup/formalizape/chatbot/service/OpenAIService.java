@@ -162,16 +162,26 @@ public class OpenAIService {
 
         List<String> docs = listDocuments();
 
-        String prompt = "Tengo estos documentos disponibles:\n" +
-                String.join("\n", docs) +
-                "\n\nCon este mensaje del usuario: \"" + userMessage + "\"" +
-                "\n\nDevuelve ÚNICAMENTE el nombre del archivo que mejor sirve para responder. " +
-                "Sin explicación adicional.";
+        // 🔎 Log de depuración — para verificar qué documentos realmente ve el modelo
+        System.out.println("📁 Documentos disponibles para selección: " + docs);
+
+        // 🔥 Prompt reforzado para evitar inventos
+        String prompt =
+                "Selecciona el nombre EXACTO de uno de los siguientes archivos:\n\n" +
+                        String.join("\n", docs) +
+                        "\n\nIMPORTANTE:\n" +
+                        "- Devuelve únicamente el nombre de un archivo EXACTAMENTE como aparece en la lista.\n" +
+                        "- No inventes nombres.\n" +
+                        "- No modifiques, resumas ni cambies el nombre.\n" +
+                        "- La respuesta debe coincidir letra por letra con uno de los nombres listados.\n" +
+                        "- Si no hay coincidencia clara, elige el documento más general.\n\n" +
+                        "Mensaje del usuario: \"" + userMessage + "\"\n\n" +
+                        "Devuelve SOLO el nombre del archivo, sin explicación.";
 
         ChatCompletionRequest req = ChatCompletionRequest.builder()
                 .model("gpt-4.1-mini")
                 .messages(List.of(
-                        new ChatMessage("system", "Eres un clasificador experto."),
+                        new ChatMessage("system", "Eres un clasificador estricto. Solo puedes responder con un nombre de archivo de la lista."),
                         new ChatMessage("user", prompt)
                 ))
                 .build();
